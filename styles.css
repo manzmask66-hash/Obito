@@ -314,6 +314,7 @@ body {
     padding: 20px;
     background: linear-gradient(135deg, #ffb3d9 0%, #ff69b4 100%);
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .container {
@@ -325,6 +326,7 @@ body {
     box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
     border: 3px solid #ff1493;
     text-align: center;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -420,6 +422,8 @@ p {
     height: 300px;
     margin: 40px auto 0;
     position: relative;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .envelope-flap {
@@ -475,6 +479,7 @@ p {
     align-items: center;
     position: relative;
     overflow: visible;
+    box-sizing: border-box;
 }
 
 .envelope.open .envelope-letter {
@@ -516,6 +521,86 @@ p {
     position: relative;
     min-width: 300px;
     max-width: 90vw;
+    box-sizing: border-box;
+}
+/* Responsive styles for mobile */
+@media (max-width: 600px) {
+    body {
+        padding: 8px;
+    }
+    .container {
+        padding: 12px;
+        max-width: 98vw;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(255, 20, 147, 0.18);
+    }
+    h1 {
+        font-size: 1.4em;
+        margin-bottom: 12px;
+    }
+    .heart-message {
+        padding: 10px;
+        margin-top: 12px;
+        border-radius: 6px;
+        font-size: 1em;
+    }
+    .envelope-section {
+        margin-top: 18px;
+    }
+    .envelope-section h2 {
+        font-size: 1.1em;
+        margin-bottom: 12px;
+    }
+    .question-box {
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+    }
+    .answer-input-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .answer-textbox {
+        min-width: 0;
+        max-width: 100%;
+        font-size: 1em;
+        padding: 10px 12px;
+    }
+    .envelope {
+        width: 98vw;
+        height: 180px;
+        margin: 18px auto 0;
+    }
+    .envelope-letter {
+        padding: 8px;
+        font-size: 0.95em;
+    }
+    .choice-buttons {
+        gap: 8px;
+    }
+    .option-btn {
+        padding: 8px 12px;
+        font-size: 0.95em;
+        border-radius: 12px;
+    }
+    .teddy-peek {
+        width: 40px;
+        height: 40px;
+        right: -30px;
+    }
+    .bubble-message {
+        padding: 8px 12px 8px 10px;
+        font-size: 1em;
+        border-radius: 12px 12px 12px 6px;
+        max-width: 160px;
+        min-width: 60px;
+    }
+    .popup-content {
+        padding: 12px 8px;
+        border-radius: 8px;
+        font-size: 1em;
+        min-width: 0;
+    }
 }
 .close-btn {
     position: absolute;
