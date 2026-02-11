@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+        <div class="heart-anim-container left" id="hearts-left"></div>
+        <div class="heart-anim-container right" id="hearts-right"></div>
+        <!-- Butterflies -->
+        <!-- Butterflies will be created dynamically when envelope opens -->
+        <!-- Teddy head and hand peeking from the right side of the container -->
+        <div class="teddy-peek teddy-peek-side">
+            <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Teddy head -->
+                <circle cx="55" cy="35" r="22" fill="#d8a36c" stroke="#a87b4a" stroke-width="2" />
+                <!-- Right ear -->
+                <circle cx="68" cy="22" r="8" fill="#d8a36c" stroke="#a87b4a" stroke-width="2" />
+                <!-- Teddy face -->
+                <ellipse cx="55" cy="40" rx="10" ry="8" fill="#fff" />
+                <ellipse cx="55" cy="44" rx="4" ry="2" fill="#a87b4a" />
+                <circle cx="49" cy="36" r="2" fill="#a87b4a" />
+                <circle cx="61" cy="36" r="2" fill="#a87b4a" />
+                <path d="M52 44 Q55 47 58 44" stroke="#a87b4a" stroke-width="2" fill="none" />
+                <!-- Teddy hand peeking -->
+                <ellipse cx="67" cy="62" rx="8" ry="5" fill="#d8a36c" stroke="#a87b4a" stroke-width="2" />
+                <!-- Blush -->
+                <ellipse cx="47" cy="42" rx="2.2" ry="1.2" fill="#ffb3d9" opacity="0.8" />
+                <ellipse cx="63" cy="42" rx="2.2" ry="1.2" fill="#ffb3d9" opacity="0.8" />
+                <!-- Soft border -->
+                <circle cx="55" cy="35" r="23.5" fill="none" stroke="#ffe0b2" stroke-width="3" opacity="0.7" />
+            </svg>
+        </div>
+    <div class="container">
+            
+        <h1>💕 Happy Valentine's Day My Best Friend! 💕</h1>
+        <!--<p>A day to celebrate love and cherish those who matter most.</p>-->
+        <div class="heart-message">
+            <p>You are special and deserve all the love in the world.</p>
+            
+        </div>
+
+        <div class="envelope-section">
+            <h2>Answer the question to reveal the envelope</h2>
+            
+            <div class="question-box" id="question-box">
+                <p id="question-text"><strong>You need to enter the code word. HINT - the code word is as beautiful as the you!!</strong></p>
+                <div class="answer-input-container">
+                    <input type="text" id="answer-input" placeholder="Type your answer here..." class="answer-textbox">
+                    <button id="submit-btn" class="submit-btn">Submit Answer</button>
+                </div>
+                <div id="feedback" class="feedback"></div>
+            </div>
+
+            <div class="envelope" id="envelope">
+                <div class="envelope-flap">
+                    <div class="flap-cover"></div>
+                </div>
+                <div class="envelope-body">
+                    <div class="envelope-letter">
+                        <p>💌</p>
+                        <p id="letter-message"> <p>The moon has been following me all night, but it still can’t compete with you.</p>❤️</p>
+                                                <!-- Butterflies animation removed -->
+                        <!-- Teddy and bubble, hidden by default -->
+                        <div class="teddy-container" id="teddy-container" style="display: none;">
+                            <div class="teddy">
+                                <span style="font-size: 60px;">🧸</span>
+                            </div>
+                            <div class="bubble-message" id="bubble-message">
+                                <span>Hi Naayra! You are my favorite person i ever met! 🥰</span>
+                            </div>
+                        </div>
+                        <!-- Gift/Quote buttons, hidden by default -->
+                        <div class="choice-buttons" id="choice-buttons" style="display: none; margin-top: 18px;">
+                            <button class="option-btn" id="gift-btn">Gift</button>
+                            <button class="option-btn" id="quote-btn">Quote</button>
+                        </div>
+                        <!-- Romance quotes modal -->
+                        <div id="quotes-modal" class="popup-modal">
+                            <div class="popup-content">
+                                <span class="close-btn" id="close-quotes">&times;</span>
+                                <h3>Romantic Quotes</h3>
+                                <ul id="quotes-list" style="padding-left: 20px;"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popup-modal" class="popup-modal">
+        <div class="popup-content" id="popup-content">
+            <span class="close-btn" id="close-popup">&times;</span>
+            <p id="popup-message"></p>
+        </div>
+    </div>
+
+    <script>
+                // Heart animation on both sides
+                function spawnHeart(side) {
+
+                // Butterfly animation for envelope open
+                function animateButterflyRandom() {
+                    // This function now animates a persistent butterfly
+                    // Use for continuous butterflies after envelope opens
+                    // Accepts a butterfly element
+                    return function(butterfly) {
+                        // Random end position
+                        const endX = Math.random() * (window.innerWidth - 60);
+                        const endY = Math.random() * (window.innerHeight - 60);
+                        butterfly.animate([
+                            { transform: `translate(0px, 0px) scale(1)`, opacity: 1 },
+                            { transform: `translate(${(endX - parseFloat(butterfly.style.left)) / 2}px, ${(endY - parseFloat(butterfly.style.top)) / 2}px) scale(1.1)`, opacity: 0.8 },
+                            { transform: `translate(${endX - parseFloat(butterfly.style.left)}px, ${endY - parseFloat(butterfly.style.top)}px) scale(1.2)`, opacity: 1 }
+                        ], {
+                            duration: 3200 + Math.random() * 1200,
+                            easing: 'cubic-bezier(0.4, 0.2, 0.2, 1)',
+                            fill: 'forwards'
+                        });
+                        setTimeout(() => {
+                            butterfly.style.left = `${endX}px`;
+                            butterfly.style.top = `${endY}px`;
+                            butterfly.style.transform = '';
+                            animateButterflyMove(butterfly);
+                        }, 3500);
+                    }
+                }
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.innerHTML = `<svg width="72" height="72" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28 50C27.1 50 8 36.2 8 22.5C8 14.5 15.1 10 21.5 10C25.1 10 27.7 12.2 28 12.5C28.3 12.2 30.9 10 34.5 10C40.9 10 48 14.5 48 22.5C48 36.2 28.9 50 28 50Z" fill="#ff69b4" stroke="#c41e3a" stroke-width="2.5"/></svg>`;
+                    const container = document.getElementById(side === 'left' ? 'hearts-left' : 'hearts-right');
+                    heart.style.left = side === 'left' ? (5 + Math.random() * 10) + 'px' : (5 + Math.random() * 10) + 'px';
+                    heart.style.bottom = (Math.random() * 10) + 'px';
+                    heart.style.opacity = 0.7 + Math.random() * 0.3;
+                    heart.style.transform = `scale(${0.7 + Math.random() * 0.6})`;
+                    container.appendChild(heart);
+                    // Animate
+                    const xMove = (side === 'left' ? 1 : -1) * (20 + Math.random() * 30);
+                    const yMove = 180 + Math.random() * 120;
+                    const rot = (Math.random() * 40 - 20);
+                    heart.animate([
+                        { opacity: heart.style.opacity, transform: heart.style.transform + ' translateY(0) rotate(0deg)' },
+                        { opacity: 1, transform: heart.style.transform + ` translate(${xMove/2}px, -${yMove/2}px) rotate(${rot/2}deg)` },
+                        { opacity: 0, transform: heart.style.transform + ` translate(${xMove}px, -${yMove}px) rotate(${rot}deg)` }
+                    ], {
+                        duration: 3200 + Math.random() * 1200,
+                        easing: 'cubic-bezier(0.4, 0.2, 0.2, 1)',
+                        fill: 'forwards'
+                    });
+                    setTimeout(() => heart.remove(), 4000);
+                }
+
+                setInterval(() => spawnHeart('left'), 900);
+                setInterval(() => spawnHeart('right'), 1100);
+        const envelope = document.getElementById('envelope');
+        const feedback = document.getElementById('feedback');
+        const answerInput = document.getElementById('answer-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const correctAnswer = 'moon'; // Correct answer (case-insensitive)
+        let answered = false;
+        let wrongAttempts = 0;
+        const popupModal = document.getElementById('popup-modal');
+        const popupMessage = document.getElementById('popup-message');
+        const closePopup = document.getElementById('close-popup');
+        const teddyContainer = document.getElementById('teddy-container');
+        const choiceButtons = document.getElementById('choice-buttons');
+        const giftBtn = document.getElementById('gift-btn');
+        const quoteBtn = document.getElementById('quote-btn');
+        const quotesModal = document.getElementById('quotes-modal');
+        const closeQuotes = document.getElementById('close-quotes');
+        const quotesList = document.getElementById('quotes-list');
+
+        const romanceQuotes = [
+            "I love you not only for what you are, but for what I am when I am with you.",
+            "You are my today and all of my tomorrows.",
+            "In all the world, there is no heart for me like yours.",
+            "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more.",
+            "If I know what love is, it is because of you.",
+            "I would rather spend one lifetime with you than face all the ages of this world alone.",
+            "You are the finest, loveliest, tenderest, and most beautiful person I have ever known.",
+            "Every love story is beautiful, but ours is my favorite.",
+            "I look at you and see the rest of my life in front of my eyes.",
+            "You are my sun, my moon, and all my stars.",
+            "I fell in love with you because of all the little things you do.",
+            "I never want to stop making memories with you.",
+            "You are the best thing that’s ever been mine.",
+            "I love you more than I have ever found a way to say to you.",
+            "With you, I am home."
+        ];
+
+        // Attach event handler for submit button
+        if (submitBtn) {
+            submitBtn.addEventListener('click', checkAnswer);
+        }
+
+
+
+        function checkAnswer() {
+
+            if (answered) return;
+
+            const userAnswer = answerInput.value.trim().toLowerCase();
+
+            if (!userAnswer) {
+                feedback.textContent = '⚠️ Please enter an answer before submitting.';
+                feedback.className = 'feedback warning';
+                return;
+            }
+
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = '🎉 there you go!!!,my MOON';
+                feedback.className = 'feedback success';
+                setTimeout(() => {
+                    envelope.classList.add('open');
+                    // Burst of butterflies (one-time)
+                    for (let i = 0; i < 14; i++) {
+                        const butterfly = document.createElement('div');
+                        butterfly.className = 'butterfly';
+                        butterfly.style.left = (envelope.offsetLeft + 120 + i * 12 + Math.random() * 40) + 'px';
+                        butterfly.style.top = (envelope.offsetTop + 100 + Math.random() * 30) + 'px';
+                        butterfly.innerHTML = `
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g>
+                                    <ellipse cx="14" cy="24" rx="12" ry="18" fill="#ffb3d9" stroke="#ff69b4" stroke-width="2"/>
+                                    <ellipse cx="34" cy="24" rx="12" ry="18" fill="#ffb3d9" stroke="#ff69b4" stroke-width="2"/>
+                                    <ellipse cx="24" cy="24" rx="6" ry="10" fill="#fff0f6" stroke="#ff69b4" stroke-width="1.5"/>
+                                    <ellipse cx="24" cy="34" rx="2.5" ry="4" fill="#ff69b4"/>
+                                    <rect x="22.5" y="14" width="3" height="10" rx="1.5" fill="#ff69b4"/>
+                                </g>
+                            </svg>
+                        `;
+                        document.body.appendChild(butterfly);
+                        // Animate with random path
+                        const x1 = Math.random() * 600 - 300;
+                        const y1 = -120 - Math.random() * 120;
+                        const x2 = Math.random() * 900 - 450;
+                        const y2 = -350 - Math.random() * 200;
+                        const rot = Math.random() * 80 - 40;
+                        butterfly.animate([
+                            { opacity: 0, transform: 'translate(0, 0) scale(0.7) rotate(0deg)' },
+                            { opacity: 1, transform: `translate(${x1/2}px, ${y1/2}px) scale(1.1) rotate(${rot/2}deg)` },
+                            { opacity: 1, transform: `translate(${x1}px, ${y1}px) scale(1.05) rotate(${rot}deg)` },
+                            { opacity: 1, transform: `translate(${x2}px, ${y2}px) scale(1.15) rotate(${-rot}deg)` },
+                            { opacity: 0, transform: `translate(${x2*1.2}px, ${y2*1.2}px) scale(0.8) rotate(0deg)` }
+                        ], {
+                            duration: 5200 + Math.random() * 1200,
+                            easing: 'cubic-bezier(0.4, 0.2, 0.2, 1)',
+                            fill: 'forwards'
+                        });
+                        setTimeout(() => butterfly.remove(), 6000);
+                    }
+                    // Start two persistent butterflies flying continuously
+                    function createPersistentButterfly() {
+                        const butterfly = document.createElement('div');
+                        butterfly.className = 'butterfly';
+                        butterfly.innerHTML = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="24" cy="24" rx="12" ry="18" fill="#ffb3d9" opacity="0.7"/>
+                            <ellipse cx="12" cy="24" rx="8" ry="14" fill="#a3e9ff" opacity="0.7"/>
+                            <ellipse cx="36" cy="24" rx="8" ry="14" fill="#a3e9ff" opacity="0.7"/>
+                            <circle cx="24" cy="24" r="4" fill="#a87b4a"/>
+                            <ellipse cx="24" cy="32" rx="2" ry="4" fill="#a87b4a"/>
+                        </svg>`;
+                        butterfly.style.position = 'fixed';
+                        butterfly.style.zIndex = 10;
+                        butterfly.style.opacity = 1;
+                        butterfly.style.left = (Math.random() * (window.innerWidth - 60)) + 'px';
+                        butterfly.style.top = (Math.random() * (window.innerHeight - 60)) + 'px';
+                        document.body.appendChild(butterfly);
+                        return butterfly;
+                    }
+
+                    function animateButterflyMove(butterfly) {
+                        // Animate butterfly to a new random position
+                        const endX = Math.random() * (window.innerWidth - 60);
+                        const endY = Math.random() * (window.innerHeight - 60);
+                        const startX = parseFloat(butterfly.style.left);
+                        const startY = parseFloat(butterfly.style.top);
+                        butterfly.animate([
+                            { transform: 'translate(0px, 0px) scale(1)', opacity: 1 },
+                            { transform: `translate(${(endX - startX) / 2}px, ${(endY - startY) / 2}px) scale(1.1)`, opacity: 0.8 },
+                            { transform: `translate(${endX - startX}px, ${endY - startY}px) scale(1.2)`, opacity: 1 }
+                        ], {
+                            duration: 8000 + Math.random() * 2000,
+                            easing: 'cubic-bezier(0.4, 0.2, 0.2, 1)',
+                            fill: 'forwards'
+                        });
+                        setTimeout(() => {
+                            butterfly.style.left = `${endX}px`;
+                            butterfly.style.top = `${endY}px`;
+                            butterfly.style.transform = '';
+                        }, 9000);
+                    }
+
+                    window._persistentButterflies = [];
+                    for (let i = 0; i < 2; i++) {
+                        const butterfly = createPersistentButterfly();
+                        window._persistentButterflies.push(butterfly);
+                        (function loopFly(b) {
+                            animateButterflyMove(b);
+                            setInterval(() => animateButterflyMove(b), 9000 + Math.random() * 2000);
+                        })(butterfly);
+                    }
+                    // Show teddy and bubble after envelope opens
+                    teddyContainer.style.display = 'flex';
+                    // Show choice buttons
+                    choiceButtons.style.display = 'flex';
+                }, 500);
+                answered = true;
+                submitBtn.disabled = true;
+                answerInput.disabled = true;
+            } else {
+                wrongAttempts++;
+                feedback.textContent = '❌ Sorry, that\'s not correct. Try again!';
+                feedback.className = 'feedback error';
+                answered = false;
+                submitBtn.disabled = false;
+                answerInput.disabled = false;
+                answerInput.value = '';
+                answerInput.focus();
+                if (wrongAttempts === 2) {
+                    showPopup('Really Naayra!! did you forget.');
+                } else if (wrongAttempts > 3) {
+                    showPopup('Come on Naayra😭😭😭😭, did you forget what I said to you.🌜');
+                }
+            }
+        }
+
+        // Gift and Quote button handlers
+        if (giftBtn && quoteBtn) {
+            giftBtn.onclick = function() {
+                showPopup('text me if you are free on Monday or any other day 🎁');
+            };
+            quoteBtn.onclick = function() {
+                // Populate and show quotes modal
+                quotesList.innerHTML = '';
+                romanceQuotes.forEach(function(q) {
+                    const li = document.createElement('li');
+                    li.textContent = q;
+                    quotesList.appendChild(li);
+                });
+                quotesModal.style.display = 'flex';
+            };
+        }
+
+        // Close quotes modal
+        if (closeQuotes) {
+            closeQuotes.onclick = function() {
+                quotesModal.style.display = 'none';
+            };
+        }
+
+        function showPopup(message) {
+            popupMessage.textContent = message;
+            popupModal.style.display = 'flex';
+        }
+        closePopup.onclick = function() {
+            popupModal.style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === popupModal) {
+                popupModal.style.display = 'none';
+            }
+            if (event.target === quotesModal) {
+                quotesModal.style.display = 'none';
+            }
+        };
+    </script>
+
+</body>
+</html>
