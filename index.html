@@ -1,9 +1,16 @@
+    <!-- Simple Popup Modal -->
+    <div id="simple-popup" class="popup-modal" style="display:none;">
+        <div class="popup-content">
+            <span class="close-btn" id="close-simple-popup">&times;</span>
+            <p id="simple-popup-message"></p>
+        </div>
+    </div>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Simple Page</title>
+    <title>Just For You</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -69,7 +76,8 @@
                                 <span style="font-size: 60px;">🧸</span>
                             </div>
                             <div class="bubble-message" id="bubble-message">
-                                <span>Hi Naayra! You are my favorite person i ever met! 🥰</span>
+                                
+                                    <span>Hi Naayra! <span class="talking">You are my favorite person i ever met! 🥰</span></span>
                             </div>
                         </div>
                         <!-- Gift/Quote buttons, hidden by default -->
@@ -78,13 +86,6 @@
                             <button class="option-btn" id="quote-btn">Quote</button>
                         </div>
                         <!-- Romance quotes modal -->
-                        <div id="quotes-modal" class="popup-modal">
-                            <div class="popup-content">
-                                <span class="close-btn" id="close-quotes">&times;</span>
-                                <h3>Romantic Quotes</h3>
-                                <ul id="quotes-list" style="padding-left: 20px;"></ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -92,12 +93,6 @@
     </div>
 
     <!-- Popup Modal -->
-    <div id="popup-modal" class="popup-modal">
-        <div class="popup-content" id="popup-content">
-            <span class="close-btn" id="close-popup">&times;</span>
-            <p id="popup-message"></p>
-        </div>
-    </div>
 
     <script>
                 // Heart animation on both sides
@@ -332,19 +327,40 @@
         // Gift and Quote button handlers
         if (giftBtn && quoteBtn) {
             giftBtn.onclick = function() {
-                showPopup('text me if you are free on Monday or any other day 🎁');
+                showSimplePopup('text me if you are free on Monday or any other day 🎁');
             };
             quoteBtn.onclick = function() {
-                // Populate and show quotes modal
-                quotesList.innerHTML = '';
-                romanceQuotes.forEach(function(q) {
-                    const li = document.createElement('li');
-                    li.textContent = q;
-                    quotesList.appendChild(li);
-                });
-                quotesModal.style.display = 'flex';
+                showSimplePopup(
+                    '<b>My Quotes:</b><br><br>' +
+                
+                    '"You are my today and all of my tomorrows."<br>' +
+                    '"In all the world, there is no heart for me like yours."<br>' +
+                    '"I would rather spend one lifetime with you than face all the ages of this world alone."<br>' +
+                    '"You are the finest, loveliest, tenderest, and most beautiful person I have ever known."<br>' +
+                    
+                    '"I look at you and see the rest of my life in front of my eyes."<br>' +
+                    '"You are my sun, my moon, and all my stars."<br>' +
+                   
+                    '"You are the best thing that’s ever been mine."<br>' +
+                    '"I love you more than I have ever found a way to say to you."<br>' 
+                 
+                );
             };
         }
+
+        // Simple popup logic
+        function showSimplePopup(message) {
+            document.getElementById('simple-popup-message').innerHTML = message;
+            document.getElementById('simple-popup').style.display = 'flex';
+        }
+        document.getElementById('close-simple-popup').onclick = function() {
+            document.getElementById('simple-popup').style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('simple-popup')) {
+                document.getElementById('simple-popup').style.display = 'none';
+            }
+        };
 
         // Close quotes modal
         if (closeQuotes) {
