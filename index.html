@@ -201,7 +201,7 @@
             const userAnswer = answerInput.value.trim().toLowerCase();
 
             if (!userAnswer) {
-                feedback.textContent = '⚠️ Please enter an answer before submitting.';
+                feedback.textContent = '⚠️Really?!! you just gonna leave it blank?';
                 feedback.className = 'feedback warning';
                 return;
             }
@@ -316,12 +316,19 @@
                 answerInput.disabled = false;
                 answerInput.value = '';
                 answerInput.focus();
-                if (wrongAttempts === 2) {
-                    showPopup('Really Naayra!! did you forget.');
-                } else if (wrongAttempts > 3) {
-                    showPopup('Come on Naayra😭😭😭😭, did you forget what I said to you.🌜');
+                    if (wrongAttempts === 2) {
+                        showSimplePopup('Really Naayra!! did you forget.');
+                    } else if (wrongAttempts === 3) {
+                        showSimplePopup('Come on Naayra😭😭😭😭, did you forget what I said to you.🌜');
+                } else if (wrongAttempts === 5) {
+                        showSimplePopup('🌜, did you get it now ???');
                 }
             }
+
+
+
+
+
         }
 
         // Gift and Quote button handlers
