@@ -1,3 +1,61 @@
+/* Cute and interactive submit button */
+.submit-btn {
+    background: linear-gradient(135deg, #ffb3d9 0%, #ff69b4 100%);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 14px 32px 14px 24px;
+    font-size: 1.15em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255, 20, 147, 0.18), 0 1.5px 0 #fff inset;
+    position: relative;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.3s;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+.submit-btn::before {
+    content: "\2764";
+    color: #fff0f6;
+    font-size: 1.2em;
+    margin-right: 6px;
+    filter: drop-shadow(0 0 4px #ff69b4);
+    transition: transform 0.3s;
+    will-change: transform;
+}
+.submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 8px 28px rgba(255, 20, 147, 0.22), 0 2px 0 #fff inset;
+}
+.submit-btn:active {
+    transform: scale(0.97) rotate(1deg);
+    box-shadow: 0 2px 8px rgba(255, 20, 147, 0.12);
+}
+.submit-btn:focus {
+    outline: 2px solid #ffb3d9;
+    outline-offset: 2px;
+}
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #ffd6e6;
+    color: #fff0f6;
+}
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    20% { transform: scale(1.18); }
+    40% { transform: scale(0.95); }
+    60% { transform: scale(1.12); }
+    80% { transform: scale(0.98); }
+}
+.submit-btn:hover::before {
+    animation: heartBeat 0.7s;
+}
 /* Heart animation on both sides */
 .heart-anim-container {
     position: fixed;
@@ -254,38 +312,37 @@
     text-align: center;
 }
 #quotes-list {
-    list-style: disc inside;
-    font-size: 1em;
+    list-style: none;
+    font-size: 1.18em;
     color: #d6336c;
     margin: 0;
-    padding: 0 0 0 18px;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
-/* Teddy and bubble styles */
-.teddy-container {
-    display: flex !important;
-    flex-direction: row;
-    align-items: flex-end;
-    margin-top: 10px;
-    gap: 10px;
-    animation: popTeddy 1s ease;
-}
-@keyframes popTeddy {
-    0% { transform: translateY(50px) scale(0.5); opacity: 0; }
-    60% { transform: translateY(-10px) scale(1.1); opacity: 1; }
-    100% { transform: translateY(0) scale(1); opacity: 1; }
+#quotes-list li {
+    #quotes-list {
+        list-style: disc inside;
+        font-size: 1em;
+        color: #d6336c;
+        margin: 0;
+        padding: 0 0 0 18px;
+    }
 }
 .teddy {
     margin-bottom: 8px;
 }
 .bubble-message {
-    background: #fff0f6;
-    border-radius: 20px 20px 20px 8px;
-    padding: 14px 22px 14px 18px;
-    box-shadow: 0 2px 12px rgba(255, 20, 147, 0.13);
-    font-size: 1.13em;
-    color: #d6336c;
-    position: relative;
-    margin-top: 0;
+    #quotes-list {
+        list-style: disc inside;
+        font-size: 1em;
+        color: #d6336c;
+        margin: 0;
+        padding-left: 20px;
+    }
     margin-left: 0;
     margin-bottom: 12px;
     max-width: 260px;
@@ -327,23 +384,33 @@ body {
     border: 3px solid #ff1493;
     text-align: center;
     box-sizing: border-box;
+.bubble-message {
+    background: #fff0f6;
+    border-radius: 20px 20px 20px 8px;
+    padding: 14px 22px 14px 18px;
+    box-shadow: 0 2px 12px rgba(255, 20, 147, 0.13);
+    font-size: 1.13em;
+    color: #d6336c;
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 12px;
+    max-width: 260px;
+    min-width: 120px;
+    text-align: left;
+    border: 2px solid #ffb3d9;
+    z-index: 2;
+    animation: teddyTalk 1.2s ease-in-out 0.2s 2 alternate;
 }
-
-h1 {
-    color: #ff1493;
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.2);
+@keyframes teddyTalk {
+    0% { transform: scale(1) translateY(0); opacity: 0.7; }
+    10% { transform: scale(1.05) translateY(-4px); opacity: 1; }
+    20% { transform: scale(0.98) translateY(2px); }
+    40% { transform: scale(1.08) translateY(-6px); }
+    60% { transform: scale(0.97) translateY(3px); }
+    80% { transform: scale(1.04) translateY(-2px); }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
 }
-
-p {
-    color: #c41e3a;
-    font-size: 1.2em;
-    margin: 15px 0;
-}
-
-.heart-message {
-    background-color: #ffe4e1;
     padding: 20px;
     margin-top: 25px;
     border-radius: 10px;
@@ -507,6 +574,7 @@ p {
     width: 100vw;
     height: 100vh;
     background: rgba(0,0,0,0.4);
+    display: flex;
     justify-content: center;
     align-items: center;
 }
